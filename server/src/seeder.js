@@ -306,8 +306,7 @@ const seedData = async () => {
 
     await Plant.insertMany(plants);
     console.log("🌱 Sample plants inserted!");
-
-    process.exit(); 
+    process.exit();
   } catch (err) {
     console.error("❌ Error seeding data:", err);
     process.exit(1);
