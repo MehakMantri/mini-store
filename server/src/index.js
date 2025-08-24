@@ -10,19 +10,21 @@ import plantRoutes from "./routes/plants.js";
 dotenv.config();
 
 const app = express();
+const allowedOrigins = process.env.CORS_ORIGIN?.split(",").map((s) => s.trim()) || [];
 app.use(helmet());
 app.use(compression());
 app.use(express.json());
 app.use(morgan("dev"));
 
+
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://mini-store-jet.vercel.app/"],
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
-const origin = process.env.CORS_ORIGIN?.split(",").map((s) => s.trim());
+
 
 app.get("/", (_req, res) => {
   res.send("🚀 Mini-store backend is running!");
