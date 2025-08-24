@@ -11,7 +11,7 @@ const Home = () => {
   const [filtered, setFiltered] = useState([]);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("");
-  const [availability, setAvailability] = useState(null); 
+  const [availability, setAvailability] = useState(null);
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const categories = [
@@ -22,17 +22,24 @@ const Home = () => {
     "Home Decor",
   ];
 
-
   useEffect(() => {
     const fetchPlants = async () => {
       try {
-        const res = await axios.post(`${API_BASE_URL}/api/plants`, payload);
+        const res = await axios.get(`${API_BASE_URL}/api/plants`);
         console.log("API Response:", res.data);
 
-        setPlants(res.data.data);
-        setFiltered(res.data.data);
+        const plantsData = Array.isArray(res.data.data)
+          ? res.data.data
+          : Array.isArray(res.data)
+          ? res.data
+          : [];
+
+        setPlants(plantsData);
+        setFiltered(plantsData);
       } catch (err) {
         console.error("Error fetching plants:", err);
+        setPlants([]);
+        setFiltered([]);
       }
     };
     fetchPlants();
@@ -78,7 +85,6 @@ const Home = () => {
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-green-50 via-green-100 to-green-200">
       <Navbar />
       <main className="flex-1 px-2 sm:px-8 py-4">
-        
         <section className="rounded-xl bg-gradient-to-r from-green-600 via-green-400 to-green-200 text-white p-6 mb-8 flex flex-col sm:flex-row items-center justify-between shadow-lg">
           <div className="mb-4 sm:mb-0">
             <h1 className="text-3xl sm:text-4xl font-extrabold mb-2 drop-shadow-lg">
@@ -110,7 +116,7 @@ const Home = () => {
             setSelected={setCategory}
           />
         </div>
-     
+
         <section id="catalog">
           <h2 className="text-2xl font-bold mb-4 text-green-700 text-center">
             🌿 Plant Catalog

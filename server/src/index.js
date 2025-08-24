@@ -15,8 +15,14 @@ app.use(compression());
 app.use(express.json());
 app.use(morgan("dev"));
 
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "https://mini-store-jet.vercel.app/"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 const origin = process.env.CORS_ORIGIN?.split(",").map((s) => s.trim());
-app.use(cors({ origin, credentials: false }));
 
 app.get("/", (_req, res) => {
   res.send("🚀 Mini-store backend is running!");
