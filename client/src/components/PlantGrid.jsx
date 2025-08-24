@@ -6,11 +6,12 @@ const PlantGrid = () => {
   const [plants, setPlants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  
   useEffect(() => {
     const fetchPlants = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/plants");
+        const res = await axios.post(`${API_BASE_URL}/api/plants`, payload);
         setPlants(res.data);
       } catch (err) {
         setError("Failed to load plants");

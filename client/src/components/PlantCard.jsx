@@ -1,7 +1,6 @@
 import React from "react";
 
 const PlantCard = ({ plant, onAvailabilityClick }) => {
-  // Correctly handle false values for inStock/available
   const isAvailable =
     plant.inStock !== undefined ? plant.inStock : plant.available;
   const stockStatus = isAvailable ? "In Stock" : "Out of Stock";

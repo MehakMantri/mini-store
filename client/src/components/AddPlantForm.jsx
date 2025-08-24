@@ -10,7 +10,7 @@ const AddPlantForm = () => {
   const [message, setMessage] = useState("");
   const [msgType, setMsgType] = useState("info");
   const [loading, setLoading] = useState(false);
-
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
@@ -38,7 +38,7 @@ const AddPlantForm = () => {
           : [],
         inStock: Boolean(available),
       };
-      await axios.post("http://localhost:8080/api/plants", payload);
+      await axios.post(`${API_BASE_URL}/api/plants`, payload);
       setMessage("✅ Plant added successfully!");
       setMsgType("success");
       setName("");

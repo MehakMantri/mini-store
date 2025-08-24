@@ -11,7 +11,8 @@ const Home = () => {
   const [filtered, setFiltered] = useState([]);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("");
-  const [availability, setAvailability] = useState(null); // null = all, true = in stock, false = out of stock
+  const [availability, setAvailability] = useState(null); 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const categories = [
     "Indoor",
@@ -21,14 +22,13 @@ const Home = () => {
     "Home Decor",
   ];
 
-  // Fetch plants from API
+
   useEffect(() => {
     const fetchPlants = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/plants");
+        const res = await axios.post(`${API_BASE_URL}/api/plants`, payload);
         console.log("API Response:", res.data);
 
-        // ✅ plants ka array nikalna
         setPlants(res.data.data);
         setFiltered(res.data.data);
       } catch (err) {
@@ -38,7 +38,6 @@ const Home = () => {
     fetchPlants();
   }, []);
 
-  // Filtering logic
   useEffect(() => {
     let results = plants;
 
@@ -79,7 +78,7 @@ const Home = () => {
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-green-50 via-green-100 to-green-200">
       <Navbar />
       <main className="flex-1 px-2 sm:px-8 py-4">
-        {/* Hero Section */}
+        
         <section className="rounded-xl bg-gradient-to-r from-green-600 via-green-400 to-green-200 text-white p-6 mb-8 flex flex-col sm:flex-row items-center justify-between shadow-lg">
           <div className="mb-4 sm:mb-0">
             <h1 className="text-3xl sm:text-4xl font-extrabold mb-2 drop-shadow-lg">
@@ -102,7 +101,7 @@ const Home = () => {
             className="rounded-xl w-40 sm:w-64 shadow-lg border-4 border-white"
           />
         </section>
-        {/* Search & Filter */}
+
         <div className="mb-6 flex flex-col sm:flex-row gap-2 items-center justify-between">
           <SearchBar query={query} setQuery={setQuery} />
           <FilterDropdown
@@ -111,7 +110,7 @@ const Home = () => {
             setSelected={setCategory}
           />
         </div>
-        {/* Plant Catalog */}
+     
         <section id="catalog">
           <h2 className="text-2xl font-bold mb-4 text-green-700 text-center">
             🌿 Plant Catalog
