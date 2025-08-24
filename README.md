@@ -1,10 +1,4 @@
 # Mini Plant Store 🌿
-
-**Urvann – Software Development Intern Assignment**  
-Deadline: 25th August 2025 | Submission: Public GitHub + Deployed Link  
-
-A mini plant store web app where users can browse plants, filter by categories, and check availability. Built with **React (Vite)** frontend and **Node.js + Express + MongoDB** backend.  
-
 ---
 
 ## Features
