@@ -5,14 +5,13 @@ import { validateBody } from "../middleware/validate.js";
 
 const router = Router();
 
-// Create (Admin)
 const plantSchema = Joi.object({
   name: Joi.string().min(2).max(100).required(),
   price: Joi.number().min(0).required(),
   categories: Joi.alternatives()
     .try(
       Joi.array().items(Joi.string().min(2).max(50)).min(1),
-      Joi.string().min(2) // allow comma-separated client string
+      Joi.string().min(2) 
     )
     .required(),
   inStock: Joi.boolean().required(),
@@ -35,8 +34,6 @@ router.post("/", validateBody(plantSchema), async (req, res) => {
   }
 });
 
-// List + Search + Filter + Pagination
-// GET /api/plants?q=money&category=Indoor&available=true&page=1&limit=24
 router.get("/", async (req, res) => {
   try {
     const { q, category, available, page = 1, limit = 100 } = req.query;
@@ -51,7 +48,6 @@ router.get("/", async (req, res) => {
     }
 
     if (q) {
-      // case-insensitive search in name and category keywords
       const regex = new RegExp(q, "i");
       filter.$or = [{ name: regex }, { categories: regex }];
     }
@@ -72,7 +68,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// GET unique categories
 router.get("/categories", async (_req, res) => {
   try {
     const cats = await Plant.distinct("categories");

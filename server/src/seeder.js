@@ -301,13 +301,13 @@ const seedData = async () => {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log("✅ MongoDB Connected for Seeding");
 
-    await Plant.deleteMany(); // Clear old data
+    await Plant.deleteMany();
     console.log("🗑️ Old plants deleted");
 
     await Plant.insertMany(plants);
     console.log("🌱 Sample plants inserted!");
 
-    process.exit(); // Exit process
+    process.exit(); 
   } catch (err) {
     console.error("❌ Error seeding data:", err);
     process.exit(1);
